@@ -3,7 +3,7 @@
 import json
 import pprint
 
-from package.config import (token, app_id, app_secret)
+from stats.config import (token, app_id, app_secret)
 from facebookads import FacebookAdsApi
 from facebookads.objects import AdAccount
 
@@ -176,7 +176,8 @@ class Query:
         )
 
     def __str__(self):
-        return '<[FB Query Object]>'
+        stored = True if len(self._raw) > 1 else False 
+        return '<[Query Object --> {query}]>'.format(query=stored)
 
     # Attributes
     @property
@@ -185,7 +186,7 @@ class Query:
 
     @property
     def data(self):
-        return self._response if self_response else (
+        return self._response if self._response else (
             "You haven't retrieved a job!")
 
     @property
